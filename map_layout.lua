@@ -14,7 +14,10 @@ local shape = nil
 local regen_decoratives = false
 local tiles_per_tick = 32
 
+require 'map_gen.biter_lane_wars.scenario'
 --combined--
+--local map_gen_settings_presets = require 'resources.map_gen_settings'
+--RS.set_map_gen_settings({map_gen_settings_presets.void})
 --shape = require "map_gen.combined.island_resort"
 --shape = require 'map_gen.combined.borg_planet_v2'
 --require "map_gen.combined.dimensions"
