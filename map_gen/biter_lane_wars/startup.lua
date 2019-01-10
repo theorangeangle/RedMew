@@ -9,10 +9,10 @@ local Generate = require("map_gen.shared.generate")
 local Maps = require(filepath .. 'resources.maps')
 local surface_name = RS.get_surface_name()
 
-RS.set_map_gen_settings({map_gen_settings_presets.void})
+RS.set_map_gen_settings({map_gen_settings_presets.waterworld})
 
 local regen_decoratives = false
-local tiles_per_tick = 64
+local tiles_per_tick = 32
 
 local on_timer_complete =
     Token.register(
@@ -67,7 +67,7 @@ if shape then
     local surfaces = {
         [RS.get_surface_name()] = shape,
     }
-    Generate.register_threaded({surfaces = surfaces, regen_decoratives = regen_decoratives})
+    Generate.register_non_threaded({surfaces = surfaces, regen_decoratives = regen_decoratives})
 end
 
 Event.on_init(on_init)
