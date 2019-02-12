@@ -1,13 +1,14 @@
 local Game = require 'utils.game'
 local Timestamp = require 'utils.timestamp'
 local Command = require 'utils.command'
+local Settings = require 'utils.redmew_settings'
 local Utils = require 'utils.core'
 local Report = require 'features.report'
 local Server = require 'features.server'
-local UserGroups = require 'features.user_groups'
 local Walkabout = require 'features.walkabout'
 local PlayerStats = require 'features.player_stats'
-local Settings = require 'utils.redmew_settings'
+local Rank = require 'features.rank_system'
+local Donator = require 'features.donator'
 
 local format = string.format
 local ceil = math.ceil
@@ -241,8 +242,8 @@ local function print_player_info(args, player)
         'Name: ' .. name,
         target.connected and 'Online: yes' or 'Online: no',
         'Index: ' .. target.index,
-        'Rank: ' .. UserGroups.get_rank(target),
-        UserGroups.is_donator(target.name) and 'Donator: yes' or 'Donator: no',
+        'Rank: ' .. Rank.get_player_rank_name(target),
+        Donator.is_donator(target.name) and 'Donator: yes' or 'Donator: no',
         'Time played: ' .. Utils.format_time(target.online_time),
         'AFK time: ' .. Utils.format_time(target.afk_time or 0),
         'Force: ' .. target.force.name,
@@ -377,15 +378,7 @@ Command.add(
     Report.report_command
 )
 
-Command.add(
-    'regulars',
-    {
-        description = 'Prints a list of game regulars.',
-        allowed_by_server = true
-    },
-    UserGroups.print_regulars
-)
-
+-- No man's land / free for all
 Command.add('redmew-setting-set', {
     description = 'Set a setting for yourself',
     arguments = {'setting_name', 'new_value'},
